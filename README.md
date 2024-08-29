@@ -2,6 +2,8 @@
 
 Este é um aplicativo Streamlit que calcula o valor final com base em um valor principal, taxa de juros, tipo de cálculo (mensal ou diário), multa e número de dias decorridos.
 
+Confira a [demonstração](https://calculadora-juros-multa-boleto.streamlit.app/).
+
 ## Recursos
 
 - Campos de entrada para valor principal, taxa de juros, tipo de cálculo, multa e dias decorridos
