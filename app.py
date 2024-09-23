@@ -1,14 +1,36 @@
+from datetime import datetime
+
 import streamlit as st
 
 st.title("Calculadora de Juros e Multa de Boleto")
 
 input_valor_principal = st.number_input(
-    "Valor Principal (R$)", min_value=0.0, format="%.2f"
+    label="Valor Principal (R$)", min_value=0.0, format="%.2f"
 )
-input_taxa_juros = st.number_input("Taxa de Juros (%)", min_value=0.0, format="%.2f")
-input_tipo_calculo = st.selectbox("", ["ao mês (a.m.)", "ao dia (a.d.)"])
-input_multa = st.number_input("Multa (%)", min_value=0.0, format="%.2f")
-input_dias_corridos = st.number_input("Dias Corridos (desde o vencimento)", min_value=0)
+
+col1, col2 = st.columns(2)
+with col1:
+    input_taxa_juros = st.number_input(
+        label="Taxa de Juros (%)", min_value=0.0, format="%.4f"
+    )
+
+with col2:
+    input_tipo_calculo = st.selectbox(
+        label="Tipo de Cálculo", options=["ao mês (a.m.)", "ao dia (a.d.)"]
+    )
+
+input_multa = st.number_input(label="Multa (%)", min_value=0.0, format="%.2f")
+
+input_data_vencimento = st.date_input(
+    label="Data de Vencimento", value=datetime.today(), format="DD/MM/YYYY"
+)
+input_data_base = st.date_input(
+    label="Data Base", value=datetime.today(), format="DD/MM/YYYY"
+)
+
+input_dias_corridos = (input_data_base - input_data_vencimento).days
+
+st.write(f"**Dias Corridos (desde o vencimento)**: {input_dias_corridos}")
 
 if input_tipo_calculo == "ao mês (a.m.)":
     taxa_juros_calculo = input_taxa_juros / 100
