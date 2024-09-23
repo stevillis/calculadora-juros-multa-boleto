@@ -48,7 +48,7 @@ st.write(
 )
 
 st.write(
-    f"**Multa**: {input_valor_principal:.2f} * ({input_multa:.4f} / {dias_corridos_calculo:.4f}) = `R$ {multa:.2f}`"
+    f"**Multa**: {input_valor_principal:.2f} * ({input_multa:.4f} / {100:.4f}) = `R$ {multa:.2f}`"
 )
 
 st.write(
