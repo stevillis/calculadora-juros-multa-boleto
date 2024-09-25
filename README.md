@@ -8,9 +8,9 @@ Confira a [demonstração](https://calculadora-juros-multa-boleto.streamlit.app/
 
 ## Recursos
 
-- Campos de entrada para valor principal, taxa de juros, tipo de cálculo, multa e dias decorridos
+- Campos de entrada para valor principal, taxa de juros, tipo de cálculo de juros, multa, data de vencimento e data base.
 - Cálculo automático de juros, multa e resultado final
-- Atualizações em tempo real dos resultados à medida que o usuário altera os valores de entrada
+- Atualizações em tempo real dos resultados à medida que o usuário altera os valores de entrada.
 
 ## Instalação
 
@@ -30,7 +30,7 @@ streamlit run app.py
 4. Seu navegador da web padrão deve abrir com o aplicativo Streamlit em execução.
 
 ### Uso
-1. Digite o valor principal, taxa de juros, tipo de cálculo, multa e dias decorridos.
+1. Digite o valor principal, taxa de juros, tipo de cálculo de juros, multa, data de vencimento e data base.
 2. O aplicativo calculará e exibirá automaticamente os juros, a multa e o resultado final.
 3. À medida que você altera os valores de entrada, os resultados serão atualizados dinamicamente.
 
