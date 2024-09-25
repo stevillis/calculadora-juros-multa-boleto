@@ -2,7 +2,7 @@ from datetime import datetime
 
 import streamlit as st
 
-st.title("Calculadora de Juros e Multa de Boleto")
+st.title("Calculadora de Juros e Multa")
 
 input_valor_principal = st.number_input(
     label="Valor Principal (R$)", min_value=0.0, format="%.2f"
@@ -21,6 +21,10 @@ with col2:
         label="Tipo de Cálculo", options=["ao mês (a.m.)", "ao dia (a.d.)"]
     )
 
+vencimento_anterior_2015 = st.checkbox(
+    label="Considerar regra de vencimento anterior à 2015?"
+)
+
 input_multa = st.number_input(label="Multa (%)", min_value=0.0, format="%.2f")
 
 input_data_vencimento = st.date_input(
@@ -28,11 +32,14 @@ input_data_vencimento = st.date_input(
 )
 
 input_data_base = st.date_input(
-    label="Data Base", value=datetime.today(), format="DD/MM/YYYY"
-)
-
-vencimento_anterior_2015 = st.checkbox(
-    label="Considerar regra de vencimento anterior à 2015?"
+    label="Data Base",
+    value=(
+        datetime.strptime("31/12/2015", "%d/%m/%Y").date()
+        if vencimento_anterior_2015
+        else datetime.today()
+    ),
+    format="DD/MM/YYYY",
+    disabled=vencimento_anterior_2015,
 )
 
 dias_corridos = (input_data_base - input_data_vencimento).days
@@ -43,15 +50,17 @@ st.write(f"**Dias Corridos (desde o vencimento)**: {dias_corridos}")
 
 if input_tipo_calculo == "ao mês (a.m.)":
     taxa_juros_calculo = taxa_juros / 100
-    dias_corridos_calculo = dias_corridos / 30
+    dias_corridos_tipo_calculo = dias_corridos / 30
 else:
     taxa_juros_calculo = taxa_juros / 100
-    dias_corridos_calculo = dias_corridos
+    dias_corridos_tipo_calculo = dias_corridos
 
 if vencimento_anterior_2015:
     juros = round(input_valor_principal * taxa_juros_calculo, 2)
 else:
-    juros = round(input_valor_principal * taxa_juros_calculo * dias_corridos_calculo, 2)
+    juros = round(
+        input_valor_principal * taxa_juros_calculo * dias_corridos_tipo_calculo, 2
+    )
 
 multa = round(input_valor_principal * (input_multa / 100), 2)
 resultado_final = round(input_valor_principal + juros + multa, 2)
@@ -62,7 +71,7 @@ if vencimento_anterior_2015:
     )
 else:
     st.write(
-        f"**Juros**: {input_valor_principal:.2f} * {taxa_juros_calculo:.4f} * {dias_corridos_calculo:.4f} = `R$ {juros:.2f}`"
+        f"**Juros**: {input_valor_principal:.2f} * {taxa_juros_calculo:.4f} * {dias_corridos_tipo_calculo:.4f} = `R$ {juros:.2f}`"
     )
 
 st.write(
@@ -81,7 +90,9 @@ st.markdown(
 st.write(
     """
  **Fórmulas**
-- Juros: `Valor Principal * Taxa de Juros * Dias Corridos`
+- Juros
+    - `Valor Principal * round((Dias Corridos / 2) / 30) + (Dias Corridos / 2) / 31), 0)`, se regra de vencimento anterior à 2015 é selecionada.
+    - `Valor Principal * Taxa de Juros * Dias Corridos`, caso contrário.
 - Multa: `Valor Principal * (Multa / 100)`
 - Valor Final: `Valor Principal + Juros + Multa`
 """

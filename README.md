@@ -1,8 +1,8 @@
-# Calculadora de Juros e Multa de Boleto
+# Calculadora de Juros e Multa
 
 Este é um aplicativo Streamlit que calcula o valor final com base em um valor principal, taxa de juros, tipo de cálculo (mensal ou diário), multa e número de dias decorridos.
 
-![Calculadora de Juros e Multa de Boleto](app_preview.png)
+![Calculadora de Juros e Multa](app_preview.png)
 
 Confira a [demonstração](https://calculadora-juros-multa-boleto.streamlit.app/).
 
